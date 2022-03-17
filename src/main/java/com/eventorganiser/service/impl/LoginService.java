@@ -1,5 +1,8 @@
 package com.eventorganiser.service.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,16 +38,23 @@ public class LoginService implements ILoginService{
 	}
 
 	@Override
-	public ResponseEntity<HttpStatus> canUserLogin(UserLoginDetails userLoginDetailsObject) {
+	public ResponseEntity<Map<String, String>> canUserLogin(UserLoginDetails userLoginDetailsObject) {
+		Map<String, String> loginStatus = new HashMap<>();
+		loginStatus.put("status", "FALSE");
+		ResponseEntity<Map<String, String>> response = new ResponseEntity<>(loginStatus, HttpStatus.BAD_REQUEST);
 		if(ObjectUtils.isEmpty(userLoginDetailsObject.getEmailId())
 				&& ObjectUtils.isEmpty(userLoginDetailsObject.getPassword())) {
-			response = new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
+			loginStatus.put("status", "Pre-requisite details missing");
+			response = new ResponseEntity<>(loginStatus, HttpStatus.PRECONDITION_FAILED);
 		} else {
 			UserLoginDetails userLoginDetails = userLoginRepository.findUserByEmailId(userLoginDetailsObject.getEmailId());
-			if(ObjectUtils.isEmpty(userLoginDetails)) {
-				response = new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+			if(ObjectUtils.isEmpty(userLoginDetails) && !userLoginDetails.getPassword().equals(userLoginDetailsObject.getPassword())) {
+				loginStatus.put("status", "FALSE");
+				loginStatus.put("reason", "Invalid Username/Password");
+				response = new ResponseEntity<>(loginStatus, HttpStatus.UNAUTHORIZED);
 			} else {
-				response = new ResponseEntity<>(HttpStatus.OK);
+				loginStatus.put("status", "TRUE");
+				response = new ResponseEntity<>(loginStatus, HttpStatus.OK);
 			}
 		}
 		return response;
