@@ -1,16 +1,20 @@
 package com.eventorganiser.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import com.eventorganiser.domain.constant.UserLoginDetails;
 import com.eventorganiser.repository.UserLoginRepository;
 import com.eventorganiser.service.ILoginService;
 
+@Service
 public class LoginService implements ILoginService{
 
-	private UserLoginRepository userLoginRepository;
+	@Autowired
+	public UserLoginRepository userLoginRepository;
 	
 	private ResponseEntity<HttpStatus> response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	
