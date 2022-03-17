@@ -1,9 +1,9 @@
 plugins {
-	id 'org.springframework.boot' version '3.0.0-SNAPSHOT'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'org.springframework.boot' version '2.5.2'
 	id 'java'
 }
 
+apply plugin: 'io.spring.dependency-management'
 group = 'com.eventorganiser'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
@@ -19,6 +19,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-ldap'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation "io.springfox:springfox-swagger-ui:2.10.5"	
+	implementation "io.springfox:springfox-swagger2:2.9.2"
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
