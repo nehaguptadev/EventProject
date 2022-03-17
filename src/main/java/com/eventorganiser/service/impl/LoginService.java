@@ -23,8 +23,13 @@ public class LoginService implements ILoginService{
 		if(ObjectUtils.isEmpty(userLoginDetailsObject)) {
 			response = new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
 		} else {
-			userLoginRepository.save(userLoginDetailsObject);
-			response = new ResponseEntity<>(HttpStatus.CREATED);
+			UserLoginDetails userLoginDetails = userLoginRepository.findUserByEmailId(userLoginDetailsObject.getEmailId());
+			if(ObjectUtils.isEmpty(userLoginDetails)) {
+				userLoginRepository.save(userLoginDetailsObject);
+				response = new ResponseEntity<>(HttpStatus.CREATED);
+			} else {
+				response = new ResponseEntity<>(HttpStatus.PRECONDITION_FAILED);
+			}
 		}
 		return response;
 	}

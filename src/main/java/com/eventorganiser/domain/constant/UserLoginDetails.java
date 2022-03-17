@@ -9,9 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="USER_LOGIN_DETAILS", schema="event_project")
+@Table(name="USER_LOGIN_DETAILS", schema="event_project", 
+uniqueConstraints = {@UniqueConstraint(columnNames={"email_Id"})})
 @NamedNativeQuery(name = "UserLoginDetails.findUserByEmailId", query = CommonQueryConstant.FIND_USER_BY_EMAIL_ID)
 public class UserLoginDetails implements Serializable{
 
