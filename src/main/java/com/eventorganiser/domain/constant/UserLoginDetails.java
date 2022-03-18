@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedNativeQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -20,7 +21,8 @@ public class UserLoginDetails implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name="USER_LOGIN_DETAILS_GENERATOR", sequenceName="event_project.user_login_details_seq", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="USER_LOGIN_DETAILS_GENERATOR")
     @Column(name = "user_id")
 	private Long userId;
 	
