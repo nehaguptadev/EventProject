@@ -7,15 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedNativeQuery;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name="USER_LOGIN_DETAILS", schema="event_project", 
-uniqueConstraints = {@UniqueConstraint(columnNames={"email_Id"})})
-@NamedNativeQuery(name = "UserLoginDetails.findUserByEmailId", query = CommonQueryConstant.FIND_USER_BY_EMAIL_ID)
+@Table(name="USER_LOGIN_DETAILS", schema="event_project")
+@NamedQuery(name = "UserLoginDetails.findUserByEmailId", query = CommonQueryConstant.FIND_USER_BY_EMAIL_ID)
 public class UserLoginDetails implements Serializable{
 
 	private static final long serialVersionUID = 1L;
