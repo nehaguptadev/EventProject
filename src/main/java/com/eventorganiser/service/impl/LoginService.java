@@ -48,7 +48,11 @@ public class LoginService implements ILoginService{
 			response = new ResponseEntity<>(loginStatus, HttpStatus.PRECONDITION_FAILED);
 		} else {
 			UserLoginDetails userLoginDetails = userLoginRepository.findUserByEmailId(userLoginDetailsObject.getEmailId());
-			if(ObjectUtils.isEmpty(userLoginDetails) && !userLoginDetails.getPassword().equals(userLoginDetailsObject.getPassword())) {
+			if(ObjectUtils.isEmpty(userLoginDetails)) {
+				loginStatus.put("status", "FALSE");
+				loginStatus.put("reason", "Email ID does not exist");
+				response = new ResponseEntity<>(loginStatus, HttpStatus.NOT_FOUND);
+			} else if(!userLoginDetails.getPassword().equals(userLoginDetailsObject.getPassword())) {
 				loginStatus.put("status", "FALSE");
 				loginStatus.put("reason", "Invalid Username/Password");
 				response = new ResponseEntity<>(loginStatus, HttpStatus.UNAUTHORIZED);
